@@ -14,11 +14,12 @@ class Snake extends JFrame implements KeyListener, Runnable {
     /* VARIABLES INT */
     int x = 500;  //Tamaño del panel en X
     int y = 300;  //Tamaño del panel en Y
-    int cont = 2; 
-    int contP2 = 2; 
+    int contP1 = 2; 
+    int contP2 = 2; /*CONTADOR PLAYER2*/
     int dirx = 1; 
     int diry = 0; 
-    int vel = 50; 
+    int vel = 70; 
+    int velP2 = 70; /*VELOCIDAD PLAYER2*/
     int dif = 0; 
     int oldx; 
     int oldy;
@@ -45,7 +46,8 @@ class Snake extends JFrame implements KeyListener, Runnable {
         
         super("Snake");
         setSize(500, 330);
-        cont = 3;
+        
+        contP1 = 3;
         arrx[0] = 100;
         arry[0] = 150;
         dirx = 10;
@@ -99,25 +101,25 @@ class Snake extends JFrame implements KeyListener, Runnable {
     
 
     void crecer() {
-        SnakeP1[cont] = new JButton();
-        SnakeP1[cont].setEnabled(false);
-        panel.add(SnakeP1[cont]);
+        SnakeP1[contP1] = new JButton();
+        SnakeP1[contP1].setEnabled(false);
+        panel.add(SnakeP1[contP1]);
 
         int a = 10 + (10 * r.nextInt(48));
         int b = 10 + (10 * r.nextInt(23));
 
-        arrx[cont] = a;
-        arry[cont] = b;
+        arrx[contP1] = a;
+        arry[contP1] = b;
         
-        SnakeP1[cont].setBounds(a, b, 10, 10);
-        SnakeP1[cont].setBackground(Color.green);
+        SnakeP1[contP1].setBounds(a, b, 10, 10);
+        SnakeP1[contP1].setBackground(Color.green);
 
-        cont++;
+        contP1++;
     }
     
     void Avanzar() {
         
-        for (int i = 0; i < cont; i++) {
+        for (int i = 0; i < contP1; i++) {
             arrp[i] = SnakeP1[i].getLocation();
         }
 
@@ -125,7 +127,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
         arry[0] += diry;
         SnakeP1[0].setBounds(arrx[0], arry[0], 10, 10);
 
-        for (int i = 1; i < cont; i++) {
+        for (int i = 1; i < contP1; i++) {
             SnakeP1[i].setLocation(arrp[i - 1]);
         }
 
@@ -139,7 +141,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
             arry[0] = y - 10;
         }
 
-        if (arrx[0] == arrx[cont - 1] && arry[0] == arry[cont - 1]) {
+        if (arrx[0] == arrx[contP1 - 1] && arry[0] == arry[contP1 - 1]) {
             bc = false;
         }
 
@@ -147,7 +149,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
             crecer();
             bc = true;
         } else {
-            SnakeP1[cont - 1].setBounds(arrx[cont - 1], arry[cont - 1], 10, 10);
+            SnakeP1[contP1 - 1].setBounds(arrx[contP1 - 1], arry[contP1 - 1], 10, 10);
         }
 
         panel.repaint();
