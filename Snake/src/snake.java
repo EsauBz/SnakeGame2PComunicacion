@@ -10,13 +10,32 @@ class Snake extends JFrame implements KeyListener, Runnable {
     JPanel p;
     JButton[] Snake = new JButton[200];
     JButton comida;
-    int x = 500, y = 300, cont = 2, dirx = 1, diry = 0, vel = 50, dif = 0, oldx, oldy;
+    /* VARIABLES INT */
+    int x = 500; 
+    int y = 300; 
+    int cont = 2; 
+    int dirx = 1; 
+    int diry = 0; 
+    int vel = 50; 
+    int dif = 0; 
+    int oldx; 
+    int oldy;
+    /* ARREGLOS INT */
     int[] arrx = new int[300];
     int[] arry = new int[300];
+    /* ARREGLO POINT  */
     Point[] arrp = new Point[300];
+    
     Point cp = new Point();
+    /* HILO */
     Thread hilo;
-    boolean bc = false, izq = false, der = true, y1 = true, y2 = true;
+    /* VARIABLES BOOLEAN */
+    boolean bc = false;
+    boolean izq = false;
+    boolean der = true;
+    boolean y1 = true;
+    boolean y2 = true;
+    /* RANDOM */
     Random r = new Random();
     
 
