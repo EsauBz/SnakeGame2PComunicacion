@@ -7,13 +7,15 @@ import java.util.*;
 
 class Snake extends JFrame implements KeyListener, Runnable {
 
-    JPanel panel;
-    JButton[] Snake = new JButton[200];
-    JButton comida;
+    JPanel panel; //Panel donde se despliega el juego
+    
+    JButton[] SnakeP1 = new JButton[200];
+    JButton[] SnakeP2 = new JButton[200]; /*Player2*/
     /* VARIABLES INT */
-    int x = 500; 
-    int y = 300; 
+    int x = 500;  //Tamaño del panel en X
+    int y = 300;  //Tamaño del panel en Y
     int cont = 2; 
+    int contP2 = 2; 
     int dirx = 1; 
     int diry = 0; 
     int vel = 50; 
@@ -38,7 +40,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
     /* RANDOM */
     Random r = new Random();
     
-
+/******** CONSTRUCTOR ****************/
     Snake() {
         
         super("Snake");
@@ -57,10 +59,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
         y2 = true;
         
         
-        panel = new JPanel();
-        
-        comida = new JButton();
-        comida.setEnabled(false);
+        panel = new JPanel();        
         
         Snakeprincipal();
 
@@ -79,17 +78,19 @@ class Snake extends JFrame implements KeyListener, Runnable {
         
         hilo = new Thread(this);
         hilo.start(); 
-    }
+    }/****fin de constructor******/
 
     public void Snakeprincipal() {
         // Initially the snake has small length 3
         for (int i = 0; i < 3; i++) {
             
-            Snake[i] = new JButton("lb" + i);
-            Snake[i].setBackground(Color.green);
-            Snake[i].setEnabled(false);
-            panel.add(Snake[i]);
-            Snake[i].setBounds(arrx[i], arry[i], 10, 10);
+            SnakeP1[i] = new JButton("lb" + i);
+            SnakeP1[i].setBackground(Color.green);
+            SnakeP1[i].setEnabled(false);
+            panel.add(SnakeP1[i]);
+            
+            SnakeP1[i].setBounds(arrx[i], arry[i], 10, 10);
+            
             arrx[i + 1] = arrx[i] - 10;
             arry[i + 1] = arry[i]; 
         }
@@ -98,17 +99,18 @@ class Snake extends JFrame implements KeyListener, Runnable {
     
 
     void crecer() {
-        Snake[cont] = new JButton();
-        Snake[cont].setEnabled(false);
-        panel.add(Snake[cont]);
+        SnakeP1[cont] = new JButton();
+        SnakeP1[cont].setEnabled(false);
+        panel.add(SnakeP1[cont]);
 
         int a = 10 + (10 * r.nextInt(48));
         int b = 10 + (10 * r.nextInt(23));
 
         arrx[cont] = a;
         arry[cont] = b;
-        Snake[cont].setBounds(a, b, 10, 10);
-        Snake[cont].setBackground(Color.green);
+        
+        SnakeP1[cont].setBounds(a, b, 10, 10);
+        SnakeP1[cont].setBackground(Color.green);
 
         cont++;
     }
@@ -116,15 +118,15 @@ class Snake extends JFrame implements KeyListener, Runnable {
     void Avanzar() {
         
         for (int i = 0; i < cont; i++) {
-            arrp[i] = Snake[i].getLocation();
+            arrp[i] = SnakeP1[i].getLocation();
         }
 
         arrx[0] += dirx;
         arry[0] += diry;
-        Snake[0].setBounds(arrx[0], arry[0], 10, 10);
+        SnakeP1[0].setBounds(arrx[0], arry[0], 10, 10);
 
         for (int i = 1; i < cont; i++) {
-            Snake[i].setLocation(arrp[i - 1]);
+            SnakeP1[i].setLocation(arrp[i - 1]);
         }
 
         if (arrx[0] == x) {
@@ -145,13 +147,14 @@ class Snake extends JFrame implements KeyListener, Runnable {
             crecer();
             bc = true;
         } else {
-            Snake[cont - 1].setBounds(arrx[cont - 1], arry[cont - 1], 10, 10);
+            SnakeP1[cont - 1].setBounds(arrx[cont - 1], arry[cont - 1], 10, 10);
         }
 
         panel.repaint();
         setVisible(true);
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {
         // snake move to left when player pressed left arrow
         if (izq == true && e.getKeyCode() == 37) {
@@ -187,12 +190,15 @@ class Snake extends JFrame implements KeyListener, Runnable {
         }
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
     }
 
+    @Override
     public void keyTyped(KeyEvent e) {
     }
 
+    @Override
     public void run() {
         int i=0;
         while(i<1) {
