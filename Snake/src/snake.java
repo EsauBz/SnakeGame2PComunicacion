@@ -7,7 +7,7 @@ import java.util.*;
 
 class Snake extends JFrame implements KeyListener, Runnable {
 
-    JPanel p;
+    JPanel panel;
     JButton[] Snake = new JButton[200];
     JButton comida;
     /* VARIABLES INT */
@@ -57,20 +57,20 @@ class Snake extends JFrame implements KeyListener, Runnable {
         y2 = true;
         
         
-        p = new JPanel();
+        panel = new JPanel();
         
         comida = new JButton();
         comida.setEnabled(false);
         
         Snakeprincipal();
 
-        p.setLayout(null);
+        panel.setLayout(null);
         
-        p.setBounds(0, 0, x, y);
-        p.setBackground(Color.black);
+        panel.setBounds(0, 0, x, y);
+        panel.setBackground(Color.black);
         
         getContentPane().setLayout(null);
-        getContentPane().add(p);
+        getContentPane().add(panel);
         
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -84,13 +84,14 @@ class Snake extends JFrame implements KeyListener, Runnable {
     public void Snakeprincipal() {
         // Initially the snake has small length 3
         for (int i = 0; i < 3; i++) {
+            
             Snake[i] = new JButton("lb" + i);
             Snake[i].setBackground(Color.green);
             Snake[i].setEnabled(false);
-            p.add(Snake[i]);
+            panel.add(Snake[i]);
             Snake[i].setBounds(arrx[i], arry[i], 10, 10);
             arrx[i + 1] = arrx[i] - 10;
-            arry[i + 1] = arry[i];
+            arry[i + 1] = arry[i]; 
         }
     }
 
@@ -99,7 +100,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
     void crecer() {
         Snake[cont] = new JButton();
         Snake[cont].setEnabled(false);
-        p.add(Snake[cont]);
+        panel.add(Snake[cont]);
 
         int a = 10 + (10 * r.nextInt(48));
         int b = 10 + (10 * r.nextInt(23));
@@ -113,6 +114,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
     }
     
     void Avanzar() {
+        
         for (int i = 0; i < cont; i++) {
             arrp[i] = Snake[i].getLocation();
         }
@@ -146,7 +148,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
             Snake[cont - 1].setBounds(arrx[cont - 1], arry[cont - 1], 10, 10);
         }
 
-        p.repaint();
+        panel.repaint();
         setVisible(true);
     }
 
