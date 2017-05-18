@@ -31,9 +31,11 @@ class Snake extends JFrame implements KeyListener, Runnable {
     /* ARREGLOS INT */
     int[] arrx = new int[300];
     int[] arry = new int[300];
+    int[] arrxP2 = new int[300];
+    int[] arryP2 = new int[300];
     /* ARREGLO POINT  */
     Point[] arrp = new Point[300];
-    
+    Point[] arrpP2 = new Point[300];
     Point cp = new Point();
     /* HILO */
     Thread hilo;
@@ -57,6 +59,9 @@ class Snake extends JFrame implements KeyListener, Runnable {
         
         arrx[0] = 100;
         arry[0] = 150;
+        arrxP2[0] = 100;
+        arryP2[0] = 150;
+        
         dirx = 10;
         diry = 0;
         dif = 0;
@@ -147,8 +152,8 @@ class Snake extends JFrame implements KeyListener, Runnable {
         int a = 10 + (10 * r.nextInt(48));
         int b = 10 + (10 * r.nextInt(23));
 
-        arrx[contP2] = a;
-        arry[contP2] = b;
+        arrxP2[contP2] = a;
+        arryP2[contP2] = b;
         
         SnakeP2[contP2].setBounds(a, b, 10, 10);
         SnakeP2[contP2].setBackground(Color.red);
@@ -194,7 +199,48 @@ class Snake extends JFrame implements KeyListener, Runnable {
         panel.repaint();
         setVisible(true);
     }
+    /********************************************************/
+    
+    void AvanzarP2() {
+        
+        for (int i = 0; i < contP2; i++) {
+            arrpP2[i] = SnakeP2[i].getLocation();
+        }
 
+        arrxP2[0] += dirx;
+        arryP2[0] += diry;
+        SnakeP2[0].setBounds(arrxP2[0], arryP2[0], 10, 10);
+
+        for (int i = 1; i < contP2; i++) {
+            SnakeP2[i].setLocation(arrpP2[i - 1]);
+        }
+
+        if (arrxP2[0] == x) {
+            arrxP2[0] = 10;
+        } else if (arrxP2[0] == 0) {
+            arrxP2[0] = x - 10;
+        } else if (arryP2[0] == y) {
+            arryP2[0] = 10;
+        } else if (arryP2[0] == 0) {
+            arryP2[0] = y - 10;
+        }
+
+        if (arrxP2[0] == arrxP2[contP2 - 1] && arryP2[0] == arryP2[contP2 - 1]) {
+            bc = false;
+        }
+
+        if (bc == false) {
+            crecer();
+            bc = true;
+        } else {
+            SnakeP2[contP2 - 1].setBounds(arrxP2[contP2 - 1], arryP2[contP2 - 1], 10, 10);
+        }
+
+        panel.repaint();
+        setVisible(true);
+    }
+    
+    /******************************************************/
     @Override
     public void keyPressed(KeyEvent e) {
         // snake move to left when player pressed left arrow
