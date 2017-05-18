@@ -21,13 +21,16 @@ class Snake extends JFrame implements KeyListener, Runnable {
     
     int dirx = 1; 
     int diry = 0; 
+    int dirxP2 = 1; 
+    int diryP2 = 0; 
     
     int vel = 70; 
     int velP2 = 70; /*VELOCIDAD PLAYER2*/
     
-    int dif = 0; 
-    int oldx; 
-    int oldy;
+    //int dif = 0; 
+    //int oldx; 
+    //int oldy;
+    
     /* ARREGLOS INT */
     int[] arrx = new int[300];
     int[] arry = new int[300];
@@ -36,7 +39,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
     /* ARREGLO POINT  */
     Point[] arrp = new Point[300];
     Point[] arrpP2 = new Point[300];
-    Point cp = new Point();
+    //Point cp = new Point();
     /* HILO */
     Thread hilo;
     /* VARIABLES BOOLEAN */
@@ -45,6 +48,12 @@ class Snake extends JFrame implements KeyListener, Runnable {
     boolean der = true;
     boolean y1 = true;
     boolean y2 = true;
+    /* VARIABLES BOOLEAN P2*/
+    boolean bcP2 = false;
+    boolean izqP2 = false;
+    boolean derP2 = true;
+    boolean y1P2 = true;
+    boolean y2P2 = true;
     /* RANDOM */
     Random r = new Random();
     
@@ -64,7 +73,9 @@ class Snake extends JFrame implements KeyListener, Runnable {
         
         dirx = 10;
         diry = 0;
-        dif = 0;
+        dirxP2 = 10;
+        diryP2 = 0;
+        //dif = 0;
         
         bc = false;
         izq = false;
@@ -72,11 +83,18 @@ class Snake extends JFrame implements KeyListener, Runnable {
         y1 = true;
         y2 = true;
         
+        bcP2 = false;
+        izqP2 = false;
+        derP2 = true;
+        y1P2 = true;
+        y2P2 = true;
+        
         
         panel = new JPanel();        
         
         Snakeprincipal();
         SnakeprincipalP2();
+        
         panel.setLayout(null);
         
         panel.setBounds(0, 0, x, y);
@@ -207,8 +225,8 @@ class Snake extends JFrame implements KeyListener, Runnable {
             arrpP2[i] = SnakeP2[i].getLocation();
         }
 
-        arrxP2[0] += dirx;
-        arryP2[0] += diry;
+        arrxP2[0] += dirxP2;
+        arryP2[0] += diryP2;
         SnakeP2[0].setBounds(arrxP2[0], arryP2[0], 10, 10);
 
         for (int i = 1; i < contP2; i++) {
@@ -226,12 +244,12 @@ class Snake extends JFrame implements KeyListener, Runnable {
         }
 
         if (arrxP2[0] == arrxP2[contP2 - 1] && arryP2[0] == arryP2[contP2 - 1]) {
-            bc = false;
+            bcP2 = false;
         }
 
-        if (bc == false) {
-            crecer();
-            bc = true;
+        if (bcP2 == false) {
+            crecerP2();
+            bcP2 = true;
         } else {
             SnakeP2[contP2 - 1].setBounds(arrxP2[contP2 - 1], arryP2[contP2 - 1], 10, 10);
         }
@@ -275,6 +293,42 @@ class Snake extends JFrame implements KeyListener, Runnable {
             der = true;
             izq = true;
         }
+        
+        /* ******* Desiciones para el Player dos *************/
+        
+        if (izq == true && e.getKeyCode() == 37) {
+            dirx = -10; // means snake move right to left by 10pixels
+            diry = 0;
+            der = false;     // run right(runr) means snake cant move from left to right
+            y1 = true;      // run up   (runu) means snake can move from down to up
+            y2 = true;      // run down (run down) means snake can move from up to down
+        }
+        // snake move to up when player pressed up arrow
+        if (y1 == true && e.getKeyCode() == 38) {
+            dirx = 0;
+            diry = -10; // means snake move from down to up by 10 pixel
+            y2 = false;     // run down (run down) means snake can move from up to down
+            der = true;      // run right(runr) means snake can move from left to right
+            izq = true;      // run left (runl) means snake can move from right to left
+        }
+        // snake move to right when player pressed right arrow
+        if (der == true && e.getKeyCode() == 39) {
+            dirx = +10; // means snake move from left to right by 10 pixel
+            diry = 0;
+            izq = false;
+            y1 = true;
+            y2 = true;
+        }
+        // snake move to down when player pressed down arrow
+        if (y2 == true && e.getKeyCode() == 40) {
+            dirx = 0;
+            diry = +10; // means snake move from left to right by 10 pixel
+            y1 = false;
+            der = true;
+            izq = true;
+        }
+        /**********Fin de decisiones player dos ***********/
+        
     }
 
     @Override
@@ -291,6 +345,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
         while(i<1) {
             
             Avanzar();
+            AvanzarP2();
             try {
                 Thread.sleep(vel);
             } catch (InterruptedException ie) {
