@@ -296,36 +296,37 @@ class Snake extends JFrame implements KeyListener, Runnable {
         
         /* ******* Desiciones para el Player dos *************/
         
-        if (izq == true && e.getKeyCode() == 37) {
-            dirx = -10; // means snake move right to left by 10pixels
-            diry = 0;
-            der = false;     // run right(runr) means snake cant move from left to right
-            y1 = true;      // run up   (runu) means snake can move from down to up
-            y2 = true;      // run down (run down) means snake can move from up to down
+        if (izqP2 == true && e.getKeyCode() == 49) {
+            dirxP2 = -10; // means snake move right to left by 10pixels
+            diryP2 = 0;
+            derP2 = false;     // run right(runr) means snake cant move from left to right
+            y1P2 = true;      // run up   (runu) means snake can move from down to up
+            y2P2 = true;      // run down (run down) means snake can move from up to down
         }
         // snake move to up when player pressed up arrow
-        if (y1 == true && e.getKeyCode() == 38) {
-            dirx = 0;
-            diry = -10; // means snake move from down to up by 10 pixel
-            y2 = false;     // run down (run down) means snake can move from up to down
-            der = true;      // run right(runr) means snake can move from left to right
-            izq = true;      // run left (runl) means snake can move from right to left
+        if (y1P2 == true && e.getKeyCode() == 50) {
+            dirxP2 = 0;
+            diryP2 = -10; // means snake move from down to up by 10 pixel
+            y2P2 = false;     // run down (run down) means snake can move from up to down
+            derP2 = true;      // run right(runr) means snake can move from left to right
+            izqP2 = true;      // run left (runl) means snake can move from right to left
         }
         // snake move to right when player pressed right arrow
-        if (der == true && e.getKeyCode() == 39) {
-            dirx = +10; // means snake move from left to right by 10 pixel
-            diry = 0;
-            izq = false;
-            y1 = true;
-            y2 = true;
+        if (derP2 == true && e.getKeyCode() == 51) {
+            dirxP2 = +10; // means snake move from left to right by 10 pixel
+            diryP2 = 0;
+            izqP2 = false;
+            y1P2 = true;
+            y2P2 = true;
         }
+        
         // snake move to down when player pressed down arrow
-        if (y2 == true && e.getKeyCode() == 40) {
-            dirx = 0;
-            diry = +10; // means snake move from left to right by 10 pixel
-            y1 = false;
-            der = true;
-            izq = true;
+        if (y2P2 == true && e.getKeyCode() == 52) {
+            dirxP2 = 0;
+            diryP2 = +10; // means snake move from left to right by 10 pixel
+            y1P2 = false;
+            derP2 = true;
+            izqP2 = true;
         }
         /**********Fin de decisiones player dos ***********/
         
