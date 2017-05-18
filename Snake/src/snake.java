@@ -11,15 +11,20 @@ class Snake extends JFrame implements KeyListener, Runnable {
     
     JButton[] SnakeP1 = new JButton[200];
     JButton[] SnakeP2 = new JButton[200]; /*Player2*/
+    
     /* VARIABLES INT */
     int x = 500;  //Tamaño del panel en X
     int y = 300;  //Tamaño del panel en Y
+    
     int contP1 = 2; 
     int contP2 = 2; /*CONTADOR PLAYER2*/
+    
     int dirx = 1; 
     int diry = 0; 
+    
     int vel = 70; 
     int velP2 = 70; /*VELOCIDAD PLAYER2*/
+    
     int dif = 0; 
     int oldx; 
     int oldy;
@@ -48,6 +53,8 @@ class Snake extends JFrame implements KeyListener, Runnable {
         setSize(500, 330);
         
         contP1 = 3;
+        contP2 = 3;
+        
         arrx[0] = 100;
         arry[0] = 150;
         dirx = 10;
@@ -64,7 +71,7 @@ class Snake extends JFrame implements KeyListener, Runnable {
         panel = new JPanel();        
         
         Snakeprincipal();
-
+        SnakeprincipalP2();
         panel.setLayout(null);
         
         panel.setBounds(0, 0, x, y);
@@ -97,6 +104,21 @@ class Snake extends JFrame implements KeyListener, Runnable {
             arry[i + 1] = arry[i]; 
         }
     }
+    public void SnakeprincipalP2() { /*Metodo para player 2*/
+        // Initially the snake 2 has small length 3
+        for (int i = 0; i < 3; i++) {
+            
+            SnakeP2[i] = new JButton("lb" + i);
+            SnakeP2[i].setBackground(Color.red);
+            SnakeP2[i].setEnabled(false);
+            panel.add(SnakeP2[i]);
+            
+            SnakeP2[i].setBounds(arrxP2[i], arryP2[i], 10, 10);
+            
+            arrxP2[i + 1] = arrxP2[i] - 10;
+            arryP2[i + 1] = arryP2[i]; 
+        }
+    }
 
     
 
@@ -115,6 +137,23 @@ class Snake extends JFrame implements KeyListener, Runnable {
         SnakeP1[contP1].setBackground(Color.green);
 
         contP1++;
+    }
+    
+    void crecerP2() { /*Metodo para player 2*/
+        SnakeP2[contP2] = new JButton();
+        SnakeP2[contP2].setEnabled(false);
+        panel.add(SnakeP2[contP2]);
+
+        int a = 10 + (10 * r.nextInt(48));
+        int b = 10 + (10 * r.nextInt(23));
+
+        arrx[contP2] = a;
+        arry[contP2] = b;
+        
+        SnakeP2[contP2].setBounds(a, b, 10, 10);
+        SnakeP2[contP2].setBackground(Color.red);
+
+        contP2++;
     }
     
     void Avanzar() {
